@@ -47,16 +47,18 @@ function prompt_alex_setup {
   zstyle ':prezto:module:git:info:branch' format "${_prompt_alex_colors[1]}%b%f"
   zstyle ':prezto:module:git:info:clean' format "${_prompt_alex_colors[5]}✔%f"
   zstyle ':prezto:module:git:info:dirty' format "${_prompt_alex_colors[4]}✗✗✗%f"
-    
-    zstyle ':prezto:module:git:info:keys' format 'prompt' '(%b%C%D)'
+  zstyle ':prezto:module:git:info:keys' format 'prompt' '(%b %C%D)'
 
   # Set ruby-info parameters.
   zstyle ':prezto:module:ruby:info:version' format '[%v]'
 
   # Define prompts.
+  _lineup=$'\e[1A'
+  _linedown=$'\e[1B'
+
   PROMPT="╭─${_prompt_alex_colors[3]}%n%f@${_prompt_alex_colors[2]}%m%f ${_prompt_alex_colors[5]}%~%f "'${git_info:+${(e)git_info[prompt]}}'"
 ╰─$ "
-  RPROMPT='%F{grey}[%D{%H:%M:%S}]'
+  RPROMPT="%{${_lineup}%}%F{grey}[%D{%H:%M:%S}]%{${_linedown}%}"
 }
 
 prompt_alex_setup "$@"
