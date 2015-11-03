@@ -5,4 +5,5 @@ ln -s ~/.dotfiles/.zprezto/modules/prompt/functions/prompt_alex_setup ~/.zprezto
 ln -s ~/.dotfiles/.zprezto/runcoms/zshrc ~/.zprezto/runcoms/zshrc
 ln -s ~/.dotfiles/.zpreztorc ~/.zpreztorc
 ln -s ~/.dotfiles/.zshrc ~/.zshrc
+ln -s ~/.dotfiles/.emacs.d/alex-spolsky-theme.el ~/.emacs.d/alex-spolsky-theme.el
 ```
