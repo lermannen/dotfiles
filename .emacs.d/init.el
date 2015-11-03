@@ -24,10 +24,8 @@
 (setq-default indent-tabs-mode nil)
 
 (condition-case err
-   (let ((path "~/.emacs.d/.cask/24.5.1/elpa/sublime-themes-20150328.131"))
-      (add-to-list 'custom-theme-load-path path)
-      (load-theme 'spolsky t))
-      (error (message "Failed to load the spolsky theme: %s" err)))
+    (load-theme 'alex-spolsky t)
+  (error (message "Failed to load the alex-spolsky theme: %s" err)))
 
 (add-hook 'after-init-hook 'my-after-init-hook)
 (defun my-after-init-hook ()
@@ -38,6 +36,9 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(custom-safe-themes
+   (quote
+    ("eb73d1b604135b94fe309af73a6f5a5ae8ec01f31de7631ddfab24ebee1c23ca" default)))
  '(inhibit-startup-screen t)
  '(menu-bar-mode nil)
  '(safe-local-variable-values (quote ((allout-layout . t))))
