@@ -1,4 +1,4 @@
-(require 'cask "/usr/local/Cellar/cask/0.7.2_1/cask.el")
+(require 'cask "/usr/local/Cellar/cask/0.7.4/cask.el")
 (cask-initialize)
 (require 'pallet)
 (pallet-mode t)
@@ -15,6 +15,7 @@
   (normal-top-level-add-subdirs-to-load-path))
 
 (global-linum-mode)
+(scroll-bar-mode -1)
 
 (add-to-list 'exec-path "/Users/alexander.korling/src/klarna/otp-bin/install/R15B03-1/bin")
 
@@ -83,7 +84,7 @@
 
 (require 'grizzl)
 (projectile-global-mode)
-(setq projectile-enable-caching t)
+(setq projectile-enable-caching nil)
 (setq projectile-completion-system 'grizzl)
 ;; Press Command-p for fuzzy find in project
 (global-set-key (kbd "M-p") 'projectile-find-file)
@@ -102,3 +103,19 @@
 (set-default-coding-systems 'utf-8)
 (set-selection-coding-system 'utf-8)
 (prefer-coding-system 'utf-8)
+
+(defadvice find-file (before make-directory-maybe (filename &optional wildcards) activate)
+  "Create parent directory if not exists while visiting file."
+  (unless (file-exists-p filename)
+    (let ((dir (file-name-directory filename)))
+      (unless (file-exists-p dir)
+        (make-directory dir)))))
+
+(require 'alchemist)
+
+;; default font
+(set-face-attribute 'default nil :family "Menlo")
+
+;; font for all unicode characters
+(set-fontset-font t 'unicode "Apple Color Emoji" nil 'prepend)
+;; Menlo

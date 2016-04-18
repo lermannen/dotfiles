@@ -32,6 +32,6 @@ function stderl()
 # Use Kred Erlang by default, or face the consequences!
 r15b03-1
 export PATH="$HOME/.rbenv/shims:$PATH"
-
+export PATH=$PATH:/Applications/Postgres.app/Contents/Versions/9.4/bin
 be () { bundle exec $* }
 alias be=be
