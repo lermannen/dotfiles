@@ -31,3 +31,5 @@
 (depends-on "shut-up")
 (depends-on "smartparens")
 (depends-on "alchemist")
+(depends-on "dash-at-point")
+(depends-on "org-wunderlist")

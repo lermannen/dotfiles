@@ -43,6 +43,7 @@ function prompt_alex_setup {
   fi
 
   # Set git-info parameters.
+  zstyle ':prezto:module:git:status:ignore' submodules 'all'
   zstyle ':prezto:module:git:info' verbose 'yes'
   zstyle ':prezto:module:git:info:branch' format "${_prompt_alex_colors[1]}%b%f"
   zstyle ':prezto:module:git:info:clean' format "${_prompt_alex_colors[5]}✔%f"

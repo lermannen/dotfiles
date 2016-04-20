@@ -23,6 +23,11 @@ function r15b03-1()
     echo "Erlang: " `which erl`
 }
 
+function r16b03-1()
+{
+    export PATH="${HOME}/src/klarna/otp-bin/install/R16B03-1/bin:${ORIG_PATH}"
+    echo "Erlang: " `which erl`
+}
 function stderl()
 {
     export PATH="${ORIG_PATH}"
@@ -30,7 +35,7 @@ function stderl()
 }
 
 # Use Kred Erlang by default, or face the consequences!
-r15b03-1
+r16b03-1
 export PATH="$HOME/.rbenv/shims:$PATH"
 export PATH=$PATH:/Applications/Postgres.app/Contents/Versions/9.4/bin
 be () { bundle exec $* }
