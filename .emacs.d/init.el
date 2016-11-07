@@ -1,4 +1,11 @@
 ;; Startup
+
+;; Added by Package.el.  This must come before configurations of
+;; installed packages.  Don't delete this line.  If you don't want it,
+;; just comment it out by adding a semicolon to the start of the line.
+;; You may delete these explanatory comments.
+(package-initialize)
+
 (desktop-save-mode 1)
 (condition-case err
     (load-theme 'alex-spolsky t)
@@ -29,15 +36,18 @@
 (set-terminal-coding-system 'utf-8)
 (setq locale-coding-system 'utf-8)
 
+(global-set-key (kbd "C-S-SPC") 'cycle-spacing)
 
 ;; Packages
-(require 'cask "/usr/local/Cellar/cask/0.7.2_1/cask.el")
+(require 'cask "/usr/local/Cellar/cask/0.8.0/cask.el")
 (cask-initialize)
 (require 'pallet)
 (pallet-mode t)
 
 ;; OS X
 (when (eq system-type 'darwin)
+  (setq exec-path (append "/usr/local/bin" exec-path))
+  (setq ispell-program-name "/usr/local/bin/aspell")
   (setq default-input-method "MacOSX")
   (setq mac-command-modifier 'meta)
   (setq mac-option-modifier nil)
@@ -48,6 +58,13 @@
   (let ((default-directory "/usr/local/share/emacs/site-lisp/"))
     (normal-top-level-add-subdirs-to-load-path)))
 
+;; Helm
+(require 'helm-config)
+(global-set-key (kbd "M-x") 'helm-M-x)
+(helm-mode 1)
+;; Press Command-p for fuzzy find in project
+(global-set-key (kbd "M-p") 'helm-projectile)
+
 ;; EDTS
 (add-to-list 'exec-path "/Users/alexander.korling/src/klarna/otp-bin/install/R15B03-1/bin")
 (add-hook 'after-init-hook 'my-after-init-hook)
@@ -57,7 +74,7 @@
 ;; Auto complete
 (require 'auto-complete-config)
 (add-to-list 'ac-dictionary-directories
-             "~/.emacs.d/.cask/24.5.1/elpa/auto-complete-20150618.1949/dict")
+             "~/.emacs.d/.cask/25.1.1/elpa/auto-complete-20160827.649/dict")
 (ac-config-default)
 (setq ac-ignore-case nil)
 (add-to-list 'ac-modes 'enh-ruby-mode)
@@ -89,8 +106,7 @@
 (projectile-global-mode)
 (setq projectile-enable-caching nil)
 (setq projectile-completion-system 'grizzl)
-;; Press Command-p for fuzzy find in project
-(global-set-key (kbd "M-p") 'projectile-find-file)
+
 ;; Press Command-å for fuzzy switch buffer
 (global-set-key (kbd "M-å") 'projectile-switch-to-buffer)
 
@@ -144,6 +160,13 @@
       (unless (file-exists-p dir)
         (make-directory dir)))))
 
+(defun now ()
+  "Insert string for the current time formatted like '2:34 PM'."
+  (interactive)                 ; permit invocation in minibuffer
+  (insert (format-time-string "%a %d %b %H:%M:%S")))
+
+(require 'multiple-cursors)
+
 ;; Custom variables
 
 (custom-set-variables
@@ -153,13 +176,28 @@
  ;; If there is more than one, they won't work right.
  '(custom-safe-themes
    (quote
-    ("eb73d1b604135b94fe309af73a6f5a5ae8ec01f31de7631ddfab24ebee1c23ca" default)))
+    ("2e5f6682c363402b0025b353ecec380ad55fef1e5918fde394796ab9c7ef9621" "e56ee322c8907feab796a1fb808ceadaab5caba5494a50ee83a13091d5b1a10c" "eb73d1b604135b94fe309af73a6f5a5ae8ec01f31de7631ddfab24ebee1c23ca" default)))
+ '(desktop-save-mode t)
  '(inhibit-startup-screen t)
+ '(linum-format " %3i ")
+ '(markdown-command "multimarkdown")
+ '(markdown-preview-style
+   "http://thomasf.github.io/solarized-css/solarized-light.min.css")
  '(ruby-insert-encoding-magic-comment nil)
- '(safe-local-variable-values (quote ((allout-layout . t)))))
+ '(safe-local-variable-values
+   (quote
+    ((projectile-enable-caching . t)
+     (allout-layout . t)))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  )
+(put 'upcase-region 'disabled nil)
+
+(dir-locals-set-class-variables 'kred-dir
+   '((nil . ((projectile-enable-caching . t)))))
+
+(dir-locals-set-directory-class
+   "/Users/alexander.korling/src/kred" 'kred-dir)
