@@ -1,0 +1,11 @@
+echo "Reading .zprezto/runcoms/.zshrc"
+
+# Source Prezto.
+if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
+  source "${ZDOTDIR:-$HOME}/.zprezto/init.zsh"
+fi
+
+export LC_CTYPE=sv_SE.UTF-8
+export LC_ALL=sv_SE.UTF-8
+
+export PATH="$HOME/.rbenv/shims:$PATH"
