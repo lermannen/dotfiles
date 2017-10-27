@@ -6,6 +6,9 @@
 ;; You may delete these explanatory comments.
 (package-initialize)
 
+(when (eq system-type 'gnu/linux)
+  (require 'iso-transl))
+
 (desktop-save-mode 1)
 (condition-case err
     (load-theme 'alex-spolsky t)
@@ -43,6 +46,20 @@
 (cask-initialize)
 (require 'pallet)
 (pallet-mode t)
+
+(setq package-archives '(("gnu" . "http://elpa.gnu.org/packages/")
+                         ("marmalade" . "https://marmalade-repo.org/packages/")
+                         ("melpa" . "http://melpa.milkbox.net/packages/")))
+
+
+;; Snippets
+(add-to-list 'load-path "~/.emacs.d/elpa/yasnippet-20150415.244/")
+(require 'yasnippet)
+(setq yas-snippet-dirs
+      '("~/.emacs.d/snippets"                 ;; personal snippets
+        ))
+(yas-global-mode 1)
+
 
 ;; OS X
 (when (eq system-type 'darwin)
@@ -106,6 +123,11 @@
 (projectile-global-mode)
 (setq projectile-enable-caching t)
 (setq projectile-completion-system 'grizzl)
+
+(dir-locals-set-class-variables 'kred-dir
+                                '((nil . ((projectile-enable-caching . t)))))
+
+(dir-locals-set-directory-class "~/src/kred" 'kred-dir)
 
 ;; Press Command-å for fuzzy switch buffer
 (global-set-key (kbd "M-å") 'projectile-switch-to-buffer)
@@ -186,7 +208,8 @@
  '(ruby-insert-encoding-magic-comment nil)
  '(safe-local-variable-values
    (quote
-    ((projectile-enable-caching . t)
+    ((erlang-ident-level . 2)
+     (projectile-enable-caching . t)
      (allout-layout . t)))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
@@ -196,8 +219,27 @@
  )
 (put 'upcase-region 'disabled nil)
 
-(dir-locals-set-class-variables 'kred-dir
-   '((nil . ((projectile-enable-caching . t)))))
+(defun diff-region ()
+  "Select a region to compare"
+  (interactive)
+  (when (use-region-p) ; there is a region
+    (let (buf)
+      (setq buf (get-buffer-create "*Diff-regionA*"))
+      (save-current-buffer
+        (set-buffer buf)
+        (erase-buffer))
+      (append-to-buffer buf (region-beginning) (region-end))))
+  (message "Now select other region to compare and run `diff-region-now`"))
 
-(dir-locals-set-directory-class
-   "/Users/alexander.korling/src/kred" 'kred-dir)
+(defun diff-region-now ()
+  "Compare current region with region already selected by `diff-region`"
+  (interactive)
+  (when (use-region-p)
+    (let (bufa bufb)
+      (setq bufa (get-buffer-create "*Diff-regionA*"))
+      (setq bufb (get-buffer-create "*Diff-regionB*"))
+      (save-current-buffer
+        (set-buffer bufb)
+        (erase-buffer))
+      (append-to-buffer bufb (region-beginning) (region-end))
+      (ediff-buffers bufa bufb))))
