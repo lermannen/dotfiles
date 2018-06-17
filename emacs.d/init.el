@@ -21,6 +21,8 @@
 (menu-bar-mode -1)
 (tool-bar-mode -1)
 (scroll-bar-mode -1)
+(require 'powerline)
+(powerline-default-theme)
 (global-linum-mode)
 (setq-default require-final-newline t)
 (setq column-number-mode t)
@@ -29,6 +31,10 @@
 (require 'whitespace)
 (setq whitespace-style '(face empty tabs lines-tail trailing))
 (global-whitespace-mode t)
+
+(add-to-list 'load-path "path/to/which-key.el")
+(require 'which-key)
+(which-key-mode)
 
 ;; Ensure Emacs prefers UTF8 as a file encoding
 (prefer-coding-system 'utf-8)
@@ -213,8 +219,7 @@
    "http://thomasf.github.io/solarized-css/solarized-light.min.css")
  '(package-selected-packages
    (quote
-    (exec-path-from-shell ag alchemist auto-complete auto-highlight-symbol dash-at-point doom-themes edts enh-ruby-mode eproject erlang grizzl helm-projectile markdown-preview-mode multiple-cursors org-wunderlist pallet powerline rainbow-delimiters rainbow-mode robe rubocop smartparens yasnippet)))
->>>>>>> Stashed changes
+    (ag alchemist auto-complete auto-highlight-symbol dash-at-point doom-themes edts enh-ruby-mode eproject erlang exec-path-from-shell grizzl helm-projectile markdown-preview-mode multiple-cursors org-wunderlist pallet powerline rainbow-delimiters rainbow-mode robe rubocop smartparens undo-tree which-key yasnippet)))
  '(ruby-insert-encoding-magic-comment nil)
  '(safe-local-variable-values
    (quote
