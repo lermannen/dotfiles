@@ -1,5 +1,27 @@
 echo "Reading .zshrc"
 
+POWERLEVEL9K_MODE='nerdfont-complete'
+POWERLEVEL9K_PROMPT_ON_NEWLINE=true
+
+POWERLEVEL9K_DIR_WRITABLE_FORBIDDEN_FOREGROUND="white"
+POWERLEVEL9K_STATUS_VERBOSE=false
+
+POWERLEVEL9K_SHORTEN_DIR_LENGTH=3
+POWERLEVEL9K_SHORTEN_STRATEGY="truncate_middle"
+POWERLEVEL9K_CONTEXT_DEFAULT_BACKGROUND="000"
+POWERLEVEL9K_CONTEXT_DEFAULT_FOREGROUND="007"
+POWERLEVEL9K_DIR_HOME_BACKGROUND="003"
+POWERLEVEL9K_DIR_HOME_FOREGROUND="000"
+POWERLEVEL9K_DIR_HOME_SUBFOLDER_BACKGROUND="003"
+POWERLEVEL9K_DIR_HOME_SUBFOLDER_FOREGROUND="000"
+POWERLEVEL9K_TIME_BACKGROUND="black"
+POWERLEVEL9K_TIME_FOREGROUND="007"
+POWERLEVEL9K_TIME_FORMAT="%D{%H:%M:%S} %F{003}\uF017"
+POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=('status' 'context' 'dir' 'dir_writable' 'vcs')
+POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=('time')
+POWERLEVEL9K_LEFT_SEGMENT_SEPARATOR=$'\uE0B0'
+POWERLEVEL9K_RIGHT_SEGMENT_SEPARATOR=$'\uE0B2'
+
 # Source Prezto.
 if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
   source "${ZDOTDIR:-$HOME}/.zprezto/init.zsh"
@@ -27,7 +49,9 @@ case $(uname -s) in
     Darwin*)
         echo "Darwin"
         # MacOS
-        alias emacs="/Applications/Emacs.app/Contents/MacOS/Emacs -nw"
+        alias emacs="TERM=xterm-24bits /Applications/Emacs.app/Contents/MacOS/Emacs -nw"
+        . /usr/local/Cellar/asdf/0.5.0/asdf.sh
+        . /usr/local/Cellar/asdf/0.5.0/etc/bash_completion.d/asdf.bash
         ;;
     Linux*)
         echo "Linux"
@@ -49,6 +73,8 @@ case $(uname -s) in
 
         export EDITOR=ec
         alias emacs="TERM=xterm-24bits emacs -nw"
+        . $HOME/.asdf/asdf.sh
+        . $HOME/.asdf/completions/asdf.bash
         ;;
 esac
 
@@ -81,9 +107,6 @@ setopt HIST_SAVE_NO_DUPS         # Don't write duplicate entries in the history 
 setopt HIST_REDUCE_BLANKS        # Remove superfluous blanks before recording entry.
 setopt HIST_VERIFY               # Don't execute immediately upon history expansion.
 setopt HIST_BEEP                 # Beep when accessing nonexistent history.
-
-. $HOME/.asdf/asdf.sh
-. $HOME/.asdf/completions/asdf.bash
 
 disable -r time       # disable shell reserved word
 alias time='time -p ' # -p for POSIX output

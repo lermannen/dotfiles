@@ -5,6 +5,21 @@
 ;; just comment it out by adding a semicolon to the start of the line.
 ;; You may delete these explanatory comments.
 (package-initialize)
+
+;; Packages
+(when (eq system-type 'darwin)
+  (require 'cask "/usr/local/Cellar/cask/0.8.4/cask.el"))
+(when (eq system-type 'gnu/linux)
+  (require 'cask "~/.cask/cask.el"))
+(cask-initialize)
+(require 'pallet)
+(pallet-mode t)
+
+(setq package-archives '(("gnu" . "http://elpa.gnu.org/packages/")
+                         ("marmalade" . "https://marmalade-repo.org/packages/")
+                         ("melpa" . "http://melpa.milkbox.net/packages/")))
+
+
 (global-unset-key (kbd "C-z"))
 (when (eq system-type 'gnu/linux)
   (require 'iso-transl))
@@ -21,8 +36,6 @@
 (menu-bar-mode -1)
 (tool-bar-mode -1)
 (scroll-bar-mode -1)
-(require 'powerline)
-(powerline-default-theme)
 (global-linum-mode)
 (setq-default require-final-newline t)
 (setq column-number-mode t)
@@ -31,10 +44,6 @@
 (require 'whitespace)
 (setq whitespace-style '(face empty tabs lines-tail trailing))
 (global-whitespace-mode t)
-
-(add-to-list 'load-path "path/to/which-key.el")
-(require 'which-key)
-(which-key-mode)
 
 ;; Ensure Emacs prefers UTF8 as a file encoding
 (prefer-coding-system 'utf-8)
@@ -47,16 +56,13 @@
 
 (global-set-key (kbd "C-S-SPC") 'cycle-spacing)
 
-;; Packages
-(require 'cask "~/.cask/cask.el")
-(cask-initialize)
-(require 'pallet)
-(pallet-mode t)
+(add-to-list 'load-path "path/to/which-key.el")
+(require 'which-key)
+(which-key-mode)
 
-(setq package-archives '(("gnu" . "http://elpa.gnu.org/packages/")
-                         ("marmalade" . "https://marmalade-repo.org/packages/")
-                         ("melpa" . "http://melpa.milkbox.net/packages/")))
 
+(require 'powerline)
+(powerline-default-theme)
 
 ;; Snippets
 (add-to-list 'load-path "~/.emacs.d/elpa/yasnippet-20150415.244/")
@@ -91,7 +97,7 @@
 (when (memq window-system '(mac ns x))
   (exec-path-from-shell-initialize))
 ;; EDTS
-;(add-to-list 'load-path "~/src/edts/")
+(add-to-list 'load-path "~/src/edts/")
 ;(require 'edts-start)
 ;(edts-log-set-level 'debug)
 (add-hook 'after-init-hook 'my-after-init-hook)
