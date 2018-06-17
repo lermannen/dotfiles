@@ -10,12 +10,18 @@ export LC_ALL=sv_SE.UTF-8
 
 source /usr/local/share/zsh/site-functions
 
-# Ruby
+TIMEFMT='%J   %U  user %S system %P cpu %*E total'$'\n'\
+'avg shared (code):         %X KB'$'\n'\
+'avg unshared (data/stack): %D KB'$'\n'\
+'total (sum):               %K KB'$'\n'\
+'max memory:                %M MB'$'\n'\
+'page faults from disk:     %F'$'\n'\
+'other page faults:         %R'
 
-eval "$(rbenv init -)"
+# Erlang
 
-be () { bundle exec $* }
-alias be=be
+export CRACKLIB_DICTPATH=/usr/local/share/cracklib-words
+export ERL_INETRC=${HOME}/.inetrc
 
 case $(uname -s) in
     Darwin*)
@@ -25,8 +31,33 @@ case $(uname -s) in
         ;;
     Linux*)
         echo "Linux"
+        SSH_AGENT_ENV=$HOME/.ssh/agent-environment
+        function start-ssh-agent {
+                 /usr/bin/ssh-agent | sed 's/^echo/#echo/' >! $SSH_AGENT_ENV
+                         chmod 600 $SSH_AGENT_ENV
+                                 source $SSH_AGENT_ENV > /dev/null
+        }
+
+        if [ -f $SSH_AGENT_ENV ] ; then
+           source $SSH_AGENT_ENV > /dev/null
+           ps $SSH_AGENT_PID | grep -q ssh-agent || {
+              start-ssh-agent
+           }
+        else
+           start-ssh-agent
+        fi
+
+        export EDITOR=ec
+        alias emacs="TERM=xterm-24bits emacs -nw"
         ;;
 esac
+
+# Ruby
+
+eval "$(rbenv init -)"
+
+be () { bundle exec $* }
+alias be=be
 
 # Pass
 
@@ -50,3 +81,9 @@ setopt HIST_SAVE_NO_DUPS         # Don't write duplicate entries in the history 
 setopt HIST_REDUCE_BLANKS        # Remove superfluous blanks before recording entry.
 setopt HIST_VERIFY               # Don't execute immediately upon history expansion.
 setopt HIST_BEEP                 # Beep when accessing nonexistent history.
+
+. $HOME/.asdf/asdf.sh
+. $HOME/.asdf/completions/asdf.bash
+
+disable -r time       # disable shell reserved word
+alias time='time -p ' # -p for POSIX output

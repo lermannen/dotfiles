@@ -85,6 +85,7 @@ export ERL_INETRC=${HOME}/.inetrc
 function kred_otp()
 {
     export PATH="/usr/local/otp/bin:${ORIG_PATH}"
+    export PATH="$HOME/install/otp/bin:${ORIG_PATH}"
     echo "Erlang: " `which erl`
 }
 
@@ -94,6 +95,7 @@ function stderl()
     echo "Erlang: " `which erl`
 }
 kred_otp
+
 # Ruby
 
 case $(uname -s) in
@@ -104,5 +106,7 @@ case $(uname -s) in
         export PATH=$PATH:/Library/TeX/texbin
         ;;
     Linux*)
+        export PATH="$HOME/.rbenv/bin:$PATH"
+        export PATH=/home/alexander/.cache/rebar3/bin:$PATH
         ;;
 esac

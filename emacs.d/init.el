@@ -5,7 +5,7 @@
 ;; just comment it out by adding a semicolon to the start of the line.
 ;; You may delete these explanatory comments.
 (package-initialize)
-
+(global-unset-key (kbd "C-z"))
 (when (eq system-type 'gnu/linux)
   (require 'iso-transl))
 
@@ -42,7 +42,7 @@
 (global-set-key (kbd "C-S-SPC") 'cycle-spacing)
 
 ;; Packages
-(require 'cask "/usr/local/Cellar/cask/0.8.0/cask.el")
+(require 'cask "~/.cask/cask.el")
 (cask-initialize)
 (require 'pallet)
 (pallet-mode t)
@@ -85,9 +85,12 @@
 (when (memq window-system '(mac ns x))
   (exec-path-from-shell-initialize))
 ;; EDTS
-(add-to-list 'load-path "~/src/edts/")
-(require 'edts-start)
-(edts-log-set-level 'debug)
+;(add-to-list 'load-path "~/src/edts/")
+;(require 'edts-start)
+;(edts-log-set-level 'debug)
+(add-hook 'after-init-hook 'my-after-init-hook)
+(defun my-after-init-hook ()
+  (require 'edts-start))
 
 ;; Auto complete
 (require 'auto-complete-config)
@@ -171,7 +174,7 @@
 (require 'alchemist)
 
 ;; default font
-(set-face-attribute 'default nil :family "Menlo")
+;;(set-face-attribute 'default nil :family "Menlo")
 
 ;; font for all unicode characters
 (set-fontset-font t 'unicode "Apple Color Emoji" nil 'prepend)
@@ -199,7 +202,7 @@
  ;; If there is more than one, they won't work right.
  '(custom-safe-themes
    (quote
-    ("2e5f6682c363402b0025b353ecec380ad55fef1e5918fde394796ab9c7ef9621" "e56ee322c8907feab796a1fb808ceadaab5caba5494a50ee83a13091d5b1a10c" "eb73d1b604135b94fe309af73a6f5a5ae8ec01f31de7631ddfab24ebee1c23ca" default)))
+    ("1c082c9b84449e54af757bcae23617d11f563fc9f33a832a8a2813c4d7dfb652" "9d9fda57c476672acd8c6efeb9dc801abea906634575ad2c7688d055878e69d6" "b4c13d25b1f9f66eb769e05889ee000f89d64b089f96851b6da643cee4fdab08" "b35a14c7d94c1f411890d45edfb9dc1bd61c5becd5c326790b51df6ebf60f402" "f0dc4ddca147f3c7b1c7397141b888562a48d9888f1595d69572db73be99a024" "3a3de615f80a0e8706208f0a71bbcc7cc3816988f971b6d237223b6731f91605" "2e5f6682c363402b0025b353ecec380ad55fef1e5918fde394796ab9c7ef9621" "e56ee322c8907feab796a1fb808ceadaab5caba5494a50ee83a13091d5b1a10c" "eb73d1b604135b94fe309af73a6f5a5ae8ec01f31de7631ddfab24ebee1c23ca" default)))
  '(desktop-save-mode t)
  '(edts-inhibit-package-check -1)
  '(exec-path-from-shell-arguments (quote ("-l")))
@@ -210,7 +213,8 @@
    "http://thomasf.github.io/solarized-css/solarized-light.min.css")
  '(package-selected-packages
    (quote
-    (exec-path-from-shell smartparens rubocop robe rainbow-mode rainbow-delimiters pallet org-wunderlist multiple-cursors markdown-preview-mode helm-projectile grizzl erlang eproject enh-ruby-mode dash-at-point auto-highlight-symbol auto-complete alchemist ag)))
+    (exec-path-from-shell ag alchemist auto-complete auto-highlight-symbol dash-at-point doom-themes edts enh-ruby-mode eproject erlang grizzl helm-projectile markdown-preview-mode multiple-cursors org-wunderlist pallet powerline rainbow-delimiters rainbow-mode robe rubocop smartparens yasnippet)))
+>>>>>>> Stashed changes
  '(ruby-insert-encoding-magic-comment nil)
  '(safe-local-variable-values
    (quote

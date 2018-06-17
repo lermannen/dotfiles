@@ -24,13 +24,13 @@ function prompt_alex_setup {
   add-zsh-hook precmd prompt_alex_precmd
 
   # Use extended color pallete if available.
-  if [[ $TERM = *256color* || $TERM = *rxvt* ]]; then
+  if [[ $TERM = *256color* ||  $TERM = *24bits* || $TERM = *rxvt* ]]; then
     _prompt_alex_colors=(
-      "%F{81}"  # Turquoise
-      "%F{166}" # Orange
-      "%F{135}" # Purple
-      "%F{161}" # Hotpink
-      "%F{118}" # Limegreen
+      "%F{87}"  # Turquoise
+      "%F{208}" # Orange
+      "%F{147}" # Purple
+      "%F{198}" # Hotpink
+      "%F{154}" # Limegreen
     )
   else
     _prompt_alex_colors=(
