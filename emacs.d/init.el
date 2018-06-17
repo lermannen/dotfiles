@@ -82,6 +82,8 @@
 ;; Press Command-p for fuzzy find in project
 (global-set-key (kbd "M-p") 'helm-projectile)
 
+(when (memq window-system '(mac ns x))
+  (exec-path-from-shell-initialize))
 ;; EDTS
 (add-to-list 'load-path "~/src/edts/")
 (require 'edts-start)
@@ -199,12 +201,16 @@
    (quote
     ("2e5f6682c363402b0025b353ecec380ad55fef1e5918fde394796ab9c7ef9621" "e56ee322c8907feab796a1fb808ceadaab5caba5494a50ee83a13091d5b1a10c" "eb73d1b604135b94fe309af73a6f5a5ae8ec01f31de7631ddfab24ebee1c23ca" default)))
  '(desktop-save-mode t)
- '(edts-inhibit-package-check t)
+ '(edts-inhibit-package-check -1)
+ '(exec-path-from-shell-arguments (quote ("-l")))
  '(inhibit-startup-screen t)
  '(linum-format " %3i ")
  '(markdown-command "multimarkdown")
  '(markdown-preview-style
    "http://thomasf.github.io/solarized-css/solarized-light.min.css")
+ '(package-selected-packages
+   (quote
+    (exec-path-from-shell smartparens rubocop robe rainbow-mode rainbow-delimiters pallet org-wunderlist multiple-cursors markdown-preview-mode helm-projectile grizzl erlang eproject enh-ruby-mode dash-at-point auto-highlight-symbol auto-complete alchemist ag)))
  '(ruby-insert-encoding-magic-comment nil)
  '(safe-local-variable-values
    (quote
