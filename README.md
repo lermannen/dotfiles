@@ -10,6 +10,7 @@ ln -s ~/.dotfiles/zpreztorc ~/.zpreztorc
 ln -s ~/.dotfiles/zshrc ~/.zshrc
 ln -s ~/.dotfiles/emacs.d/alex-spolsky-theme.el ~/.emacs.d/alex-spolsky-theme.el
 
+curl -fsSL https://raw.githubusercontent.com/cask/cask/master/go | python
 brew install cask
 cask install
 ```

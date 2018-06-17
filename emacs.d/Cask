@@ -10,7 +10,7 @@
 (depends-on "cask")
 (depends-on "dash")
 (depends-on "dash-at-point")
-(depends-on "edts")
+;(depends-on "edts")
 (depends-on "enh-ruby-mode")
 (depends-on "epl")
 (depends-on "eproject")

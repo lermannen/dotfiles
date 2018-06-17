@@ -83,10 +83,9 @@
 (global-set-key (kbd "M-p") 'helm-projectile)
 
 ;; EDTS
-(add-to-list 'exec-path "/Users/alexander.korling/src/klarna/otp-bin/install/R15B03-1/bin")
-(add-hook 'after-init-hook 'my-after-init-hook)
-(defun my-after-init-hook ()
-  (require 'edts-start))
+(add-to-list 'load-path "~/src/edts/")
+(require 'edts-start)
+(edts-log-set-level 'debug)
 
 ;; Auto complete
 (require 'auto-complete-config)
@@ -200,6 +199,7 @@
    (quote
     ("2e5f6682c363402b0025b353ecec380ad55fef1e5918fde394796ab9c7ef9621" "e56ee322c8907feab796a1fb808ceadaab5caba5494a50ee83a13091d5b1a10c" "eb73d1b604135b94fe309af73a6f5a5ae8ec01f31de7631ddfab24ebee1c23ca" default)))
  '(desktop-save-mode t)
+ '(edts-inhibit-package-check t)
  '(inhibit-startup-screen t)
  '(linum-format " %3i ")
  '(markdown-command "multimarkdown")
@@ -216,7 +216,7 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- )
+ '(default ((t (:background nil)))))
 (put 'upcase-region 'disabled nil)
 
 (defun diff-region ()
