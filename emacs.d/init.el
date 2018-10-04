@@ -45,6 +45,25 @@
 (setq whitespace-style '(face empty tabs lines-tail trailing))
 (global-whitespace-mode t)
 
+(setq last-paste-to-osx nil)
+
+;; Enable Emacs to copy and paste properly from the terminal
+;; https://emacs.stackexchange.com/questions/26471/how-to-avoid-double-m-y-with-system-clipboard-integration-in-the-terminal
+(defun copy-from-osx ()
+  (let ((copied-text (shell-command-to-string "pbpaste")))
+    (unless (string= copied-text last-paste-to-osx)
+      copied-text)))
+
+(defun paste-to-osx (text &optional push)
+  (let ((process-connection-type nil))
+    (let ((proc (start-process "pbcopy" "*Messages*" "pbcopy")))
+      (process-send-string proc text)
+      (process-send-eof proc)))
+  (setq last-paste-to-osx text))
+
+(setq interprogram-cut-function 'paste-to-osx)
+(setq interprogram-paste-function 'copy-from-osx)
+
 ;; Ensure Emacs prefers UTF8 as a file encoding
 (prefer-coding-system 'utf-8)
 (set-default-coding-systems 'utf-8)
@@ -97,12 +116,38 @@
 (when (memq window-system '(mac ns x))
   (exec-path-from-shell-initialize))
 ;; EDTS
-(add-to-list 'load-path "~/src/edts/")
+(add-to-list 'load-path "~/src/edts_rebar3/")
 ;(require 'edts-start)
 ;(edts-log-set-level 'debug)
-(add-hook 'after-init-hook 'my-after-init-hook)
-(defun my-after-init-hook ()
-  (require 'edts-start))
+
+(eval-when-compile
+  ;; Following line is not needed if use-package.el is in ~/.emacs.d
+  (add-to-list 'load-path "/Users/alexander.korling/.emacs.d/.cask/26.1/elpa/")
+  (require 'use-package))
+
+(use-package erlang
+  :init
+  (add-to-list 'load-path "/usr/local/lib/erlang/lib/tools-3.0/emacs")
+  :mode
+  ("\\.P\\'" . erlang-mode)
+  ("\\.E\\'" . erlang-mode)
+  ("\\.S\\'" . erlang-mode)
+  :config
+  (setq erlang-indent-level 2)
+  (add-hook 'erlang-mode-hook
+            (lambda ()
+              (setq mode-name "erl"
+                    erlang-compile-extra-opts '((i . "../include"))
+                    erlang-root-dir "/usr/local/lib/erlang"
+                    exec-path (cons "/usr/local/lib/erlang/bin" exec-path)
+                    ))))
+
+(use-package edts-start
+  :init (setq edts-inhibit-package-check t))
+
+;; (add-hook 'after-init-hook 'my-after-init-hook)
+;; (defun my-after-init-hook ()
+;;   (require 'edts-start))
 
 ;; Auto complete
 (require 'auto-complete-config)
@@ -225,7 +270,7 @@
    "http://thomasf.github.io/solarized-css/solarized-light.min.css")
  '(package-selected-packages
    (quote
-    (ag alchemist auto-complete auto-highlight-symbol dash-at-point doom-themes edts enh-ruby-mode eproject erlang exec-path-from-shell grizzl helm-projectile markdown-preview-mode multiple-cursors org-wunderlist pallet powerline rainbow-delimiters rainbow-mode robe rubocop smartparens undo-tree which-key yasnippet)))
+    (use-package ag alchemist auto-complete auto-highlight-symbol dash-at-point doom-themes edts enh-ruby-mode eproject erlang exec-path-from-shell grizzl helm-projectile markdown-preview-mode multiple-cursors org-wunderlist pallet powerline rainbow-delimiters rainbow-mode robe rubocop smartparens undo-tree which-key yasnippet)))
  '(ruby-insert-encoding-magic-comment nil)
  '(safe-local-variable-values
    (quote
